@@ -2,9 +2,10 @@
 # -*- coding: utf-8 -*-
 # */AIPND-revision/intropyproject-classify-pet-images/adjust_results4_isadog.py
 #                                                                             
-# PROGRAMMER: 
-# DATE CREATED:                                 
-# REVISED DATE: 
+# PROGRAMMER: Steve S Isenberg
+# DATE CREATED: November 17, 2018
+# REVISED DATE: November 18, 2018
+#                   extended results_dic with is-a-dog and as-a-dog values
 # PURPOSE: Create a function adjust_results4_isadog that adjusts the results 
 #          dictionary to indicate whether or not the pet image label is of-a-dog, 
 #          and to indicate whether or not the classifier image label is of-a-dog.
@@ -66,5 +67,30 @@ def adjust_results4_isadog(results_dic, dogfile):
                maltese) (string - indicates text file's filename)
     Returns:
            None - results_dic is mutable data type so no return needed.
-    """           
+    """ 
+    dognames_dic = {}   # holds dic of dog names as read from file
+    pet_image_isadog = 1
+    classifier_image_asadog = 1
+
+    with open(dogfile) as dognames_file:
+        for line in dognames_file:
+            dognames_dic[line.replace('\n', '')] = 1
+
+    # print out to visually check contents read correctly
+    '''
+    for key, value in dognames_dic.items():
+        print("key: {} | value: {}".format(key, value))
+    '''
+
+    for key, value in results_dic.items():
+        pet_image_isadog = 1 if value[0] in dognames_dic.keys() else 0
+        classifier_image_asadog = 1 if value[0] in dognames_dic.keys() else 0
+        results_dic[key].extend([pet_image_isadog, classifier_image_asadog])
+        # print("key: {} value: {}".format(key, value)) # visually confirm
+
+    import csv
+    # dump the results dictionary to a csv file for offline downloading and analysis
+    with open('my_file.csv', 'w') as f:
+        [f.write('{0},{1}\n'.format(key, value)) for key, value in results_dic.items()]
+
     None

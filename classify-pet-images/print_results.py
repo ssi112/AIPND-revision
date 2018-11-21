@@ -2,8 +2,8 @@
 # -*- coding: utf-8 -*-
 # */AIPND-revision/intropyproject-classify-pet-images/print_results.py
 #                                                                             
-# PROGRAMMER: 
-# DATE CREATED:
+# PROGRAMMER: Steve S Isenberg
+# DATE CREATED: November 20, 2018
 # REVISED DATE: 
 # PURPOSE: Create a function print_results that prints the results statistics
 #          from the results statistics dictionary (results_stats_dic). It 
@@ -61,6 +61,36 @@ def print_results(results_dic, results_stats_dic, model,
                               False doesn't print anything(default) (bool) 
     Returns:
            None - simply printing results.
-    """    
+    """  
+    print("\nModel used for this run: {}".format(model.upper()))
+    print("\nOverall Counts:")
+    print("  Number of Images: {} \n  Number of Dog Images: {} \n  Number of \"Not-a\" Dog Images: {}".
+            format(results_stats_dic['n_images'], results_stats_dic['n_dogs_img'], results_stats_dic['n_notdogs_img']))
+    print("\nPercentage Calculations:")
+    print("  % Correct Dogs: {} \n  % Correct Breed: {} \n  % Correct \"Not-a\" Dog: {} \n  % Match (includes both dogs and not-a dog): {}".
+            format(results_stats_dic['pct_correct_dogs'], results_stats_dic['pct_correct_breed'], 
+                   results_stats_dic['pct_correct_notdogs'], results_stats_dic['pct_match']))
+    
+    # check for optional print flags
+    if (print_incorrect_dogs and 
+        ( (results_stats_dic['n_correct_dogs'] + results_stats_dic['n_correct_notdogs'])
+          != results_stats_dic['n_images'] ) 
+       ):
+        print("\nIncorrect Dog Assignments or Not Dog Assignments:")
+        for key in results_dic:
+            # prints out the pet label and the classifier label     
+            # ONLY when the classifier function (classifier label) misclassified dogs 
+            #   pet label is-a-dog and classifier label is-NOT-a-dog 
+            #       -OR- 
+            #   pet label is-NOT-a-dog and classifier label is-a-dog
+            #print(sum(results_dic[key][3:4]))
+            if sum(results_dic[key][3:]) == 1:
+                print("Pet image label: {} -- Pet Classifier Label: {}".format(results_dic[key][0], results_dic[key][1]))
+
+    if (print_incorrect_breed and (results_stats_dic['n_correct_dogs'] != results_stats_dic['n_correct_breed'])):
+        print("\nIncorrect Dog Breed Assignments")
+        for key in results_dic:
+            if (sum(results_dic[key][3:]) == 2 and results_dic[key][2] == 0):
+                print("Pet image label: {} -- Pet Classifier Label: {}".format(results_dic[key][0], results_dic[key][1]))
     None
                 
