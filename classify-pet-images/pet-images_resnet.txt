@@ -1,0 +1,26 @@
+Command Line Arguments:
+     dir = pet_images/ 
+    arch = resnet 
+ dogfile = dognames.txt
+
+Model used for this run: RESNET
+
+Overall Counts:
+  Number of Images: 40 
+  Number of Dog Images: 30 
+  Number of "Not-a" Dog Images: 10
+
+Percentage Calculations:
+  % Correct Dogs: 100.0 
+  % Correct Breed: 90.0 
+  % Correct "Not-a" Dog: 100.0 
+  % Match (includes both dogs and not-a dog): 82.5
+
+Incorrect Dog Assignments or Not Dog Assignments:
+
+Incorrect Dog Breed Assignments
+Pet image label: beagle -- Pet Classifier Label: walker hound, walker foxhound
+Pet image label: golden retriever -- Pet Classifier Label: leonberg
+Pet image label: great pyrenees -- Pet Classifier Label: kuvasz
+
+** Total Elapsed Runtime: 0:0:8

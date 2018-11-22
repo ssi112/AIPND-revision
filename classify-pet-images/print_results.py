@@ -4,7 +4,11 @@
 #                                                                             
 # PROGRAMMER: Steve S Isenberg
 # DATE CREATED: November 20, 2018
-# REVISED DATE: 
+# REVISED DATE: November 21, 2018
+#                   fixed optional printing of misclassified dogs & misclassified breeds
+#               November 22, 2018
+#                   added round(%, 1) to format precentages
+#
 # PURPOSE: Create a function print_results that prints the results statistics
 #          from the results statistics dictionary (results_stats_dic). It 
 #          should also allow the user to be able to print out cases of misclassified
@@ -68,8 +72,8 @@ def print_results(results_dic, results_stats_dic, model,
             format(results_stats_dic['n_images'], results_stats_dic['n_dogs_img'], results_stats_dic['n_notdogs_img']))
     print("\nPercentage Calculations:")
     print("  % Correct Dogs: {} \n  % Correct Breed: {} \n  % Correct \"Not-a\" Dog: {} \n  % Match (includes both dogs and not-a dog): {}".
-            format(results_stats_dic['pct_correct_dogs'], results_stats_dic['pct_correct_breed'], 
-                   results_stats_dic['pct_correct_notdogs'], results_stats_dic['pct_match']))
+            format(round(results_stats_dic['pct_correct_dogs'], 1), round(results_stats_dic['pct_correct_breed'], 1), 
+                   round(results_stats_dic['pct_correct_notdogs'], 1), round(results_stats_dic['pct_match'], 1)))
     
     # check for optional print flags
     if (print_incorrect_dogs and 

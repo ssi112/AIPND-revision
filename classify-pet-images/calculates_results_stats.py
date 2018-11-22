@@ -4,7 +4,10 @@
 #                                                                             
 # PROGRAMMER: Steve S Isenberg
 # DATE CREATED: November 20, 2018
-# REVISED DATE: 
+# REVISED DATE: November 22, 2018
+#                   added conditional check to avoid divide by zero error
+#                   removed round(%, 2) from percent calculation
+#
 # PURPOSE: Create a function calculates_results_stats that calculates the 
 #          statistics of the results of the programrun using the classifier's model 
 #          architecture to classify the images. This function will use the 
@@ -99,9 +102,12 @@ def calculates_results_stats(results_dic):
         if (results_dic[key][3] == 1 and results_dic[key][2] == 1): # E
             results_stats_dic['n_correct_breed'] += 1
     # calc percentages
-    results_stats_dic['pct_match'] = round(results_stats_dic['n_correct_dogs'] / results_stats_dic['n_images'] * 100, 2) # Y/Z
-    results_stats_dic['pct_correct_dogs'] = round(results_stats_dic['n_match'] / results_stats_dic['n_dogs_img'] * 100, 2) # A/B
-    results_stats_dic['pct_correct_breed'] = round(results_stats_dic['n_correct_breed'] / results_stats_dic['n_dogs_img'], 2) * 100 # E/B
-    results_stats_dic['pct_correct_notdogs'] = round(results_stats_dic['n_correct_notdogs'] / results_stats_dic['n_notdogs_img'] * 100, 2) # C/D
+    if results_stats_dic['n_images'] != 0:
+        results_stats_dic['pct_match'] = results_stats_dic['n_correct_dogs'] / results_stats_dic['n_images'] * 100.0 # Y/Z
+    if results_stats_dic['n_dogs_img'] != 0:
+        results_stats_dic['pct_correct_dogs'] = results_stats_dic['n_match'] / results_stats_dic['n_dogs_img'] * 100.0 # A/B
+        results_stats_dic['pct_correct_breed'] = results_stats_dic['n_correct_breed'] / results_stats_dic['n_dogs_img'] * 100.0 # E/B
+    if results_stats_dic['n_notdogs_img'] != 0:
+        results_stats_dic['pct_correct_notdogs'] = results_stats_dic['n_correct_notdogs'] / results_stats_dic['n_notdogs_img'] * 100.0 # C/D
     #print(results_stats_dic)
     return results_stats_dic
