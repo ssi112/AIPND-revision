@@ -6,6 +6,7 @@
 # DATE CREATED: November 15, 2018
 # REVISED DATE: November 25, 2018
 #                   updated method of splitting pet label out of file name
+#                   ignore file names that begin with a period '.'
 # PURPOSE: Create the function get_pet_labels that creates the pet labels from
 #          the image's filename. This function inputs:
 #           - The Image Folder as image_dir within get_pet_labels function and
@@ -46,9 +47,8 @@ def get_pet_labels(image_dir):
     list_of_filenames = listdir(image_dir)
     results_dic = dict()
     for i in range(0, len(list_of_filenames), 1):
-        # Skips file if starts with . (like .DS_Store of Mac OSX) because it
-        # isn't an pet image file
-        if in_files[idx][0] != ".":
+        # ignore file if it begins with . as it isn't an pet image file
+        if list_of_filenames[i][0] != ".":
             if list_of_filenames[i] not in results_dic:
                 '''
                 Based on Udacity's guidelines the below is NOT plagarism as source
